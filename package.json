@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "npx tsc",
-    "start": "nodemon server.ts"
+    "dev": "nodemon server.ts",
+    "start": "node dist/server.ts"
   },
   "keywords": [],
   "author": "",
