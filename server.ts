@@ -43,3 +43,11 @@ app.listen(process.env.PORT || 5000, async () => {
         process.exit(1)
     }
 })
+
+// "builds": [
+//         {
+//             "src": "package.json",
+//             "use": "@vercel/node",
+//             "config": { "distDir": "dist" }
+//         }
+//     ],
