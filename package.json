@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "npx tsc",
     "dev": "nodemon server.ts",
-    "start": "node dist/server.ts"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
