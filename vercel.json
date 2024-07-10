@@ -1,9 +1,3 @@
 {
-    "version": 2,
-    "routes": [
-        {
-             "src": "/(.*)",
-              "dest": "/src/server.ts"
-        }
-    ]
+    "rewrites": [{"source":"/src/(.*)", "destination": "/src"}]
 }
