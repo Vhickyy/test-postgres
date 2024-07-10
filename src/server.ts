@@ -51,3 +51,10 @@ app.listen(process.env.PORT || 5000, async () => {
 //             "config": { "distDir": "dist" }
 //         }
 //     ],
+
+// "builds": [
+//         {
+//             "src": "/dist/server.js",
+//             "use": "@vercel/node"
+//         }
+//     ],
