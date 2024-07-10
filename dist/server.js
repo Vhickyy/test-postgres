@@ -77,3 +77,10 @@ app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, fun
         process.exit(1);
     }
 }));
+// "builds": [
+//         {
+//             "src": "package.json",
+//             "use": "@vercel/node",
+//             "config": { "distDir": "dist" }
+//         }
+//     ],
