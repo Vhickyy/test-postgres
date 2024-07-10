@@ -21,7 +21,7 @@ app.use("*",(req:Request,res:Response) => {
 app.listen(5000, async () => {
     try {
         await sequelize.authenticate(); 
-        sequelize.sync({alter:true}).then(() => {
+        sequelize.sync().then(() => {
             console.log('Database & tables created!');
         }).catch((err) => {
             console.error('Unable to sync database:', err);
