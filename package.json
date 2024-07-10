@@ -5,6 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest",
+    "build": "npx tsc",
     "start": "nodemon server.ts"
   },
   "keywords": [],
