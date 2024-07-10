@@ -1,4 +1,5 @@
-import { Sequelize } from "sequelize-typescript";
+import pg from 'pg';
+import { Sequelize } from "sequelize";
 import * as dotenv from "dotenv";
 
 dotenv.config()

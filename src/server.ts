@@ -1,9 +1,9 @@
 import * as dotenv from "dotenv"
 dotenv.config();
 import express, { Request, Response } from "express"
-import sequelize from "./src/database/connection";
-import userRouter from "./src/routes/userRoute";
-import OrganizationRoute from "./src/routes/organizationRoute";
+import sequelize from "./database/connection";
+import userRouter from "./routes/userRoute";
+import OrganizationRoute from "./routes/organizationRoute";
 
 const app = express();
 
