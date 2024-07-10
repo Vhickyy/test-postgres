@@ -74,3 +74,7 @@ app.listen(process.env.PORT || 5000, async () => {
 //         }
 //     ]
 // }
+
+// {
+//     "rewrites": [{"source":"/src/(.*)", "destination": "/src"}]
+// }
