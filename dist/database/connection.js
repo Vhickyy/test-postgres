@@ -32,11 +32,11 @@ const sequelize = new sequelize_1.Sequelize(process.env.URI, {
     dialect: 'postgres',
     dialectModule: pg,
     port: Number(process.env.DB_PORT),
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false
-        }
-    }
+    // dialectOptions: {
+    //     ssl: {
+    //         require: true,
+    //         rejectUnauthorized: false
+    //     }
+    // }
 });
 exports.default = sequelize;

@@ -30,21 +30,22 @@ const uuid_1 = require("uuid");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const utils_1 = require("../utils/utils");
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { firstName, password } = req.body;
+    const { firstName, password, email } = req.body;
     const salt = yield bcryptjs_1.default.genSalt(10);
     const hashPassword = yield bcryptjs_1.default.hash(password, salt);
     try {
+        const userExist = yield User_1.default.findOne({ where: { email } });
+        if (userExist)
+            return res.status(400).json({ status: "Bad request", message: "Email already exist", statusCode: 400 });
         const user = yield User_1.default.create(Object.assign(Object.assign({}, req.body), { userId: (0, uuid_1.v4)(), password: hashPassword }));
         const organisation = yield Organization_1.default.create({ orgId: (0, uuid_1.v4)(), name: `${firstName}'s Organization` });
         yield user.addOrganizations(organisation);
         const _a = user.toJSON(), { password } = _a, rest = __rest(_a, ["password"]);
-        // const accessToken = jwt.sign({userId:rest.userId},process.env.JWT_SECRET!,{expiresIn: process.env.JWT_EXPIRE})
         const accessToken = (0, utils_1.generateToken)(rest.userId);
         return res.status(201).json({ status: "success", message: "Registration successful", data: { accessToken, user: rest } });
     }
     catch (error) {
-        console.log({ error });
-        return res.status(400).json({ status: "Bad equest", message: "Registration unsuccessful", statusCode: 400 });
+        return res.status(400).json({ status: "Bad request", message: "Registration unsuccessful", statusCode: 400 });
     }
 });
 exports.registerUser = registerUser;
@@ -54,13 +55,13 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield User_1.default.findOne({ where: { email } });
         const comparePassword = user ? bcryptjs_1.default.compare(userPassword, user.password) : null;
         if (!user || !comparePassword)
-            return res.status(401).json({ status: "Bad equest", message: "Authentication failed", statusCode: 401 });
+            return res.status(401).json({ status: "Bad request", message: "Authentication failed", statusCode: 401 });
         const _a = user === null || user === void 0 ? void 0 : user.toJSON(), { password } = _a, rest = __rest(_a, ["password"]);
         const accessToken = (0, utils_1.generateToken)(rest.userId);
-        return res.status(201).json({ status: "success", message: "login successful", data: { accessToken, user: rest } });
+        return res.status(200).json({ status: "success", message: "login successful", data: { accessToken, user: rest } });
     }
     catch (error) {
-        return res.status(401).json({ status: "Bad equest", message: "Authentication failed", statusCode: 401 });
+        return res.status(401).json({ status: "Bad request", message: "Authentication failed", statusCode: 401 });
     }
 });
 exports.loginUser = loginUser;

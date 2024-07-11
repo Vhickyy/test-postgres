@@ -31,7 +31,6 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     if (!id)
         return res.status(400).json({ status: "Bad equest", message: "id is required" });
-    req.user = "aad3bddd-3bf8-46a3-9b96-51d4d4e4b7cb";
     try {
         const user = yield User_1.default.findByPk(req.user);
         if (!user)
@@ -50,7 +49,7 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(400).json({ status: "Bad Request", message: "You are not allowed to access this resource." });
         }
         const _b = differentUser === null || differentUser === void 0 ? void 0 : differentUser.toJSON(), { password } = _b, rest = __rest(_b, ["password"]);
-        return res.status(201).json({ status: "success", message: "user sent", data: { rest } });
+        return res.status(201).json({ status: "success", message: "user sent", data: { user: rest } });
     }
     catch (error) {
         return res.status(400).json({ status: "Bad Request", message: "You are not allowed to access this resource." });
@@ -59,7 +58,6 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getUser = getUser;
 const getUserOrganizations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        req.user = "aad3bddd-3bf8-46a3-9b96-51d4d4e4b7cb";
         const user = yield User_1.default.findByPk(req.user);
         const organisations = yield (user === null || user === void 0 ? void 0 : user.getOrganizations());
         return res.status(200).json({ status: "success", message: "Orgsnisations sent successful", data: { organisations } });
@@ -79,12 +77,10 @@ const getOrganization = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (!organisation)
             return res.status(404).json({ message: "No organisation found with that orgId for you." });
         const data = organisation === null || organisation === void 0 ? void 0 : organisation.map(org => org.toJSON());
-        // const data:any = []
         return res.status(200).json({ status: "success", message: "Orgsnisation sent successful", data });
     }
     catch (error) {
-        console.log({ e: error.message });
-        // return res.status(500).json({status:"failed",message:"Internal server error"})
+        return res.status(500).json({ status: "failed", message: "Internal server error" });
     }
 });
 exports.getOrganization = getOrganization;
@@ -111,16 +107,12 @@ const addUserToOrganization = (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         const user = yield User_1.default.findByPk(userId);
         const organization = yield Organization_1.default.findByPk(orgId);
-        console.log({ organization, user });
         if (organization && user) {
-            console.log("hry");
             yield (organization === null || organization === void 0 ? void 0 : organization.addUsers(user));
-            console.log("yoo");
         }
         return res.status(200).json({ status: "success", messsage: "User added to organisation successfully" });
     }
     catch (error) {
-        console.log({ e: error.message });
         return res.status(500).json({ status: "failed", message: "Internal server error" });
     }
 });

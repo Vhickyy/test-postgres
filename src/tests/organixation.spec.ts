@@ -35,7 +35,8 @@ describe("Organization", () => {
             { id: 'uuid1', name: 'Org1', toJSON: () => ({ id: 'uuid1', name: 'Org1' }) }
         ]) as unknown as () => Promise<Organization[]>;
 
-        (User.findByPk as any).mockResolvedValueOnce(mockUser);
+        // (User.findByPk as any).mockResolvedValueOnce(mockUser);
+        const user = mockUser
 
         // await getOrganization(mockRequest, mockResponse);
         // jest.spyOn(User, 'findByPk').mockResolvedValueOnce(mockUser);

@@ -8,12 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const organizationController_1 = require("../controllers/organizationController");
-const User_1 = __importDefault(require("../database/models/User"));
 // import Organization from "../database/models/Organization"
 // import User from "../database/models/User";
 // import dotenv from "dotenv"
@@ -40,7 +36,8 @@ describe("Organization", () => {
         mockUser.getOrganizations = jest.fn().mockResolvedValueOnce([
             { id: 'uuid1', name: 'Org1', toJSON: () => ({ id: 'uuid1', name: 'Org1' }) }
         ]);
-        User_1.default.findByPk.mockResolvedValueOnce(mockUser);
+        // (User.findByPk as any).mockResolvedValueOnce(mockUser);
+        const user = mockUser;
         // await getOrganization(mockRequest, mockResponse);
         // jest.spyOn(User, 'findByPk').mockResolvedValueOnce(mockUser);
         // jest.spyOn(User, "belongsToMany").mockResolvedValueOnce(mockUser as never);

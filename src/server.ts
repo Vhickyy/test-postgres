@@ -5,7 +5,7 @@ import sequelize from "./database/connection";
 import userRouter from "./routes/userRoute";
 import OrganizationRoute from "./routes/organizationRoute";
 
-const app = express();
+export const app = express();
 
 app.use(express.json())
 
@@ -31,7 +31,27 @@ app.use((err:any,req:Request,res:Response,next:NextFunction) => {
     return res.status(status).json({message})
 })
 
-app.listen(process.env.PORT || 5000, async () => {
+// app.listen(process.env.PORT || 5000, async () => {
+//         try {
+//             await sequelize.authenticate(); 
+//             sequelize.sync().then(() => {
+//                 console.log('Database & tables created!');
+//             }).catch((err) => {
+//                 console.error('Unable to sync database:', err);
+//             });
+//             // sequelize.drop({cascade:true})
+//             // sequelize.sync({ force: true }).then(() => {
+//             //     console.log('Database & tables created!');
+//             // }).catch((err) => {
+//             //     console.error('Unable to sync database:', err);
+//             // });
+//         } catch (error:any) {
+//             console.log(error);
+//             process.exit(1)
+//         }
+//     });
+
+const server = () => { app.listen(process.env.PORT || 5000, async () => {
     try {
         await sequelize.authenticate(); 
         sequelize.sync().then(() => {
@@ -45,17 +65,14 @@ app.listen(process.env.PORT || 5000, async () => {
         // }).catch((err) => {
         //     console.error('Unable to sync database:', err);
         // });
-        // User.sync({}).then(()=>{
-        //     console.log("sync");
-        //   }).catch(()=>{
-        //     console.log("hit");
-        //   });
     } catch (error:any) {
         // console.log(error);
-        // console.log("failed");
         process.exit(1)
     }
-})
+});
+}
+
+// server()
 
 // "builds": [
 //         {

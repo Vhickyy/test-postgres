@@ -35,23 +35,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const express_1 = __importDefault(require("express"));
 const connection_1 = __importDefault(require("./database/connection"));
 const userRoute_1 = __importDefault(require("./routes/userRoute"));
 const organizationRoute_1 = __importDefault(require("./routes/organizationRoute"));
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-app.get("/", (req, res) => {
+exports.app = (0, express_1.default)();
+exports.app.use(express_1.default.json());
+exports.app.get("/", (req, res) => {
     return res.status(200).json({ message: "Welcome to user's organization project." });
 });
-app.use("/auth", userRoute_1.default);
-app.use("/api", organizationRoute_1.default);
-app.use("*", (req, res) => {
+exports.app.use("/auth", userRoute_1.default);
+exports.app.use("/api", organizationRoute_1.default);
+exports.app.use("*", (req, res) => {
     return res.status(404).json({ sucess: false, message: "Route not found" });
 });
-app.use((err, req, res, next) => {
+exports.app.use((err, req, res, next) => {
     console.log({ msg: err.message });
     let status = res.statusCode || 500;
     if (err.message == 'fetch failed') {
@@ -64,32 +65,48 @@ app.use((err, req, res, next) => {
     }
     return res.status(status).json({ message });
 });
-app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield connection_1.default.authenticate();
-        connection_1.default.sync().then(() => {
-            console.log('Database & tables created!');
-        }).catch((err) => {
-            console.error('Unable to sync database:', err);
-        });
-        // sequelize.drop({cascade:true})
-        // sequelize.sync({ force: true }).then(() => {
-        //     console.log('Database & tables created!');
-        // }).catch((err) => {
-        //     console.error('Unable to sync database:', err);
-        // });
-        // User.sync({}).then(()=>{
-        //     console.log("sync");
-        //   }).catch(()=>{
-        //     console.log("hit");
-        //   });
-    }
-    catch (error) {
-        // console.log(error);
-        // console.log("failed");
-        process.exit(1);
-    }
-}));
+// app.listen(process.env.PORT || 5000, async () => {
+//         try {
+//             await sequelize.authenticate(); 
+//             sequelize.sync().then(() => {
+//                 console.log('Database & tables created!');
+//             }).catch((err) => {
+//                 console.error('Unable to sync database:', err);
+//             });
+//             // sequelize.drop({cascade:true})
+//             // sequelize.sync({ force: true }).then(() => {
+//             //     console.log('Database & tables created!');
+//             // }).catch((err) => {
+//             //     console.error('Unable to sync database:', err);
+//             // });
+//         } catch (error:any) {
+//             console.log(error);
+//             process.exit(1)
+//         }
+//     });
+const server = () => {
+    exports.app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            yield connection_1.default.authenticate();
+            connection_1.default.sync().then(() => {
+                console.log('Database & tables created!');
+            }).catch((err) => {
+                console.error('Unable to sync database:', err);
+            });
+            // sequelize.drop({cascade:true})
+            // sequelize.sync({ force: true }).then(() => {
+            //     console.log('Database & tables created!');
+            // }).catch((err) => {
+            //     console.error('Unable to sync database:', err);
+            // });
+        }
+        catch (error) {
+            // console.log(error);
+            process.exit(1);
+        }
+    }));
+};
+// server()
 // "builds": [
 //         {
 //             "src": "package.json",
