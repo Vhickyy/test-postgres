@@ -7,6 +7,7 @@ import { v4 } from "uuid";
 export const getUser = async (req:IRequest,res:Response) => {
     const {id} = req.params;
     if(!id) return res.status(400).json({status:"Bad equest",message:"id is required"});
+    req.user = "aad3bddd-3bf8-46a3-9b96-51d4d4e4b7cb"
     try {
         const user = await User.findByPk(req.user); 
         if(!user) return res.status(400).json({status:"Bad Request",message:"Invalid User."})

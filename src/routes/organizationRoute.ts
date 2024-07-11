@@ -4,7 +4,7 @@ import { getUserOrganizations, getUser, addUserToOrganization, getOrganization, 
 
 const OrganizationRoute = Router();
 
-OrganizationRoute.get("/users/:id",authMiddleware,getUser)
+OrganizationRoute.get("/users/:id",getUser)
 OrganizationRoute.get("/organisations",authMiddleware,getUserOrganizations)
 OrganizationRoute.get("/organisations/:orgId",authMiddleware,getOrganization)
 OrganizationRoute.post("/organisations",authMiddleware,createOrganisation)

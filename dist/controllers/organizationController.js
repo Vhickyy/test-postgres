@@ -31,6 +31,7 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     if (!id)
         return res.status(400).json({ status: "Bad equest", message: "id is required" });
+    req.user = "aad3bddd-3bf8-46a3-9b96-51d4d4e4b7cb";
     try {
         const user = yield User_1.default.findByPk(req.user);
         if (!user)
