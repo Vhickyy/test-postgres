@@ -35,24 +35,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = void 0;
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const express_1 = __importDefault(require("express"));
 const connection_1 = __importDefault(require("./database/connection"));
 const userRoute_1 = __importDefault(require("./routes/userRoute"));
 const organizationRoute_1 = __importDefault(require("./routes/organizationRoute"));
-exports.app = (0, express_1.default)();
-exports.app.use(express_1.default.json());
-exports.app.get("/", (req, res) => {
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.get("/", (req, res) => {
     return res.status(200).json({ message: "Welcome to user's organization project." });
 });
-exports.app.use("/auth", userRoute_1.default);
-exports.app.use("/api", organizationRoute_1.default);
-exports.app.use("*", (req, res) => {
+app.use("/auth", userRoute_1.default);
+app.use("/api", organizationRoute_1.default);
+app.use("*", (req, res) => {
     return res.status(404).json({ sucess: false, message: "Route not found" });
 });
-exports.app.use((err, req, res, next) => {
+app.use((err, req, res, next) => {
     console.log({ msg: err.message });
     let status = res.statusCode || 500;
     if (err.message == 'fetch failed') {
@@ -85,7 +84,7 @@ exports.app.use((err, req, res, next) => {
 //         }
 //     });
 const server = () => {
-    exports.app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, function* () {
+    app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, function* () {
         try {
             yield connection_1.default.authenticate();
             connection_1.default.sync().then(() => {
@@ -93,12 +92,6 @@ const server = () => {
             }).catch((err) => {
                 console.error('Unable to sync database:', err);
             });
-            // sequelize.drop({cascade:true})
-            // sequelize.sync({ force: true }).then(() => {
-            //     console.log('Database & tables created!');
-            // }).catch((err) => {
-            //     console.error('Unable to sync database:', err);
-            // });
         }
         catch (error) {
             // console.log(error);
@@ -106,35 +99,5 @@ const server = () => {
         }
     }));
 };
+exports.default = app;
 server();
-// "builds": [
-//         {
-//             "src": "package.json",
-//             "use": "@vercel/node",
-//             "config": { "distDir": "dist" }
-//         }
-//     ],
-// "builds": [
-//         {
-//             "src": "/dist/server.js",
-//             "use": "@vercel/node"
-//         }
-//     ],
-// {
-//     "version": 2,
-//     "builds": [
-//         {
-//             "src": "/dist/server.js",
-//             "use": "@vercel/node"
-//         }
-//     ],
-//     "routes": [
-//         {
-//              "src": "/(.*)",
-//               "dest": "/dist/server.js"
-//         }
-//     ]
-// }
-// {
-//     "rewrites": [{"source":"/src/(.*)", "destination": "/src"}]
-// }

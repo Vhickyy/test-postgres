@@ -5,7 +5,7 @@ import sequelize from "./database/connection";
 import userRouter from "./routes/userRoute";
 import OrganizationRoute from "./routes/organizationRoute";
 
-export const app = express();
+const app = express();
 
 app.use(express.json())
 
@@ -59,12 +59,6 @@ const server = () => { app.listen(process.env.PORT || 5000, async () => {
         }).catch((err) => {
             console.error('Unable to sync database:', err);
         });
-        // sequelize.drop({cascade:true})
-        // sequelize.sync({ force: true }).then(() => {
-        //     console.log('Database & tables created!');
-        // }).catch((err) => {
-        //     console.error('Unable to sync database:', err);
-        // });
     } catch (error:any) {
         // console.log(error);
         process.exit(1)
@@ -72,39 +66,5 @@ const server = () => { app.listen(process.env.PORT || 5000, async () => {
 });
 }
 
+export default app 
 server()
-
-// "builds": [
-//         {
-//             "src": "package.json",
-//             "use": "@vercel/node",
-//             "config": { "distDir": "dist" }
-//         }
-//     ],
-
-// "builds": [
-//         {
-//             "src": "/dist/server.js",
-//             "use": "@vercel/node"
-//         }
-//     ],
-
-// {
-//     "version": 2,
-//     "builds": [
-//         {
-//             "src": "/dist/server.js",
-//             "use": "@vercel/node"
-//         }
-//     ],
-//     "routes": [
-//         {
-//              "src": "/(.*)",
-//               "dest": "/dist/server.js"
-//         }
-//     ]
-// }
-
-// {
-//     "rewrites": [{"source":"/src/(.*)", "destination": "/src"}]
-// }

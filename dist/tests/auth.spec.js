@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const server_1 = require("../server");
+const server_1 = __importDefault(require("../server"));
 const User_1 = __importDefault(require("../database/models/User"));
 const connection_1 = __importDefault(require("../database/connection"));
 const Organization_1 = __importDefault(require("../database/models/Organization"));
@@ -34,7 +34,7 @@ describe("Auth endpoint", () => {
             password: 'secretpassword',
             phone: '00000',
         };
-        const response = yield (0, supertest_1.default)(server_1.app).post('/auth/register').send(newUser);
+        const response = yield (0, supertest_1.default)(server_1.default).post('/auth/register').send(newUser);
         expect(response.statusCode).toBe(201);
         expect(response.body.status).toBe('success');
         expect(response.body.message).toBe('Registration successful');
@@ -49,7 +49,7 @@ describe("Auth endpoint", () => {
     }));
     it('login with wrong credentials', () => __awaiter(void 0, void 0, void 0, function* () {
         const user = { email: 'test@gmail,com', password: 'secretsecret' };
-        const response = yield (0, supertest_1.default)(server_1.app).post('/auth/login').send(user);
+        const response = yield (0, supertest_1.default)(server_1.default).post('/auth/login').send(user);
         expect(response.statusCode).toBe(401);
         expect(response.body.status).toBe('Bad request');
         expect(response.body.message).toBe('Authentication failed');
@@ -62,13 +62,13 @@ describe("Auth endpoint", () => {
             password: 'secretpassword',
             phone: '00000',
         };
-        const response = yield (0, supertest_1.default)(server_1.app).post('/auth/register').send(newUser);
+        const response = yield (0, supertest_1.default)(server_1.default).post('/auth/register').send(newUser);
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toBe('Email already exist');
     }));
     it('login user', () => __awaiter(void 0, void 0, void 0, function* () {
         const user = { email: 'test@gmail.com', password: 'secretpassword' };
-        const response = yield (0, supertest_1.default)(server_1.app).post('/auth/login').send(user);
+        const response = yield (0, supertest_1.default)(server_1.default).post('/auth/login').send(user);
         expect(response.statusCode).toBe(200);
     }));
 });
