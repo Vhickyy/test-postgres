@@ -38,7 +38,7 @@ User.init({
         allowNull: false
     },
     phone: {
-        type: sequelize_1.DataTypes.INTEGER
+        type: sequelize_1.DataTypes.STRING
     }
 }, {
     sequelize: connection_1.default,

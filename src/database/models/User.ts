@@ -45,7 +45,7 @@ User.init({
     allowNull: false
   },
   phone:{
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING
   }
 }, {
   sequelize,

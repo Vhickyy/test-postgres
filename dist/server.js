@@ -68,7 +68,7 @@ app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, fun
     try {
         yield connection_1.default.authenticate();
         yield connection_1.default.sync({ alter: true });
-        yield connection_1.default.drop();
+        // await sequelize.drop()
         console.log('Database & tables created!');
     }
     catch (error) {
