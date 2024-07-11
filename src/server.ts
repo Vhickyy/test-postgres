@@ -34,8 +34,8 @@ app.use((err:any,req:Request,res:Response,next:NextFunction) => {
 app.listen(process.env.PORT || 5000, async () => {
         try {
             await sequelize.authenticate(); 
-            await sequelize.sync({alter:true})
-            // await sequelize.drop()
+            await sequelize.sync()
+            await sequelize.drop()
             console.log('Database & tables created!');
         } catch (error:any) {
             console.log(error,"gddhdhd");
