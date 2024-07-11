@@ -21,6 +21,8 @@ export const registerUser = async (req:Request,res:Response) => {
         const accessToken = generateToken(rest.userId);
         return res.status(201).json({status:"success",message:"Registration successful",data:{accessToken,user:rest}})
     } catch (error:any) {
+        console.log({error:error.message});
+        
         return res.status(400).json({status:"Bad request",message:"Registration unsuccessful",statusCode:400})
     }
 }
