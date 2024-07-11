@@ -99,5 +99,5 @@ const server = () => {
         }
     }));
 };
-exports.default = app;
 server();
+exports.default = app;

@@ -4,17 +4,22 @@ import User from "../database/models/User"
 import sequelize from "../database/connection";
 import Organization from "../database/models/Organization";
 
+let server: any;
 
 describe("Auth endpoint", () => {
 
     beforeAll(async () => {
         await sequelize.authenticate(); 
-        await sequelize.sync({alter: true})
+        await sequelize.sync({alter: true});
+        server = app.listen(8000, () => {
+            console.log(`Test server running on port ${process.env.PORT || 5000}`);
+        });
     })
 
     afterAll(async () => {
         await sequelize.drop();
         await sequelize.close();
+        server.close();
     })
 
     it('register user with default organisation', async () => {
@@ -74,6 +79,9 @@ describe("Auth endpoint", () => {
 
         const response = await request(app).post('/auth/login').send(user);
         expect(response.statusCode).toBe(200);
+        expect(response.body.data.accessToken).toBeDefined();
+        expect(response.body.data.user.firstName).toBeDefined();;
+        // expect(response.body.data.user.lastName).toBe(newUser.lastName);
     });
 
 })

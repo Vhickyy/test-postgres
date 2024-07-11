@@ -17,14 +17,19 @@ const server_1 = __importDefault(require("../server"));
 const User_1 = __importDefault(require("../database/models/User"));
 const connection_1 = __importDefault(require("../database/connection"));
 const Organization_1 = __importDefault(require("../database/models/Organization"));
+let server;
 describe("Auth endpoint", () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         yield connection_1.default.authenticate();
         yield connection_1.default.sync({ alter: true });
+        server = server_1.default.listen(8000, () => {
+            console.log(`Test server running on port ${process.env.PORT || 5000}`);
+        });
     }));
     afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
         yield connection_1.default.drop();
         yield connection_1.default.close();
+        server.close();
     }));
     it('register user with default organisation', () => __awaiter(void 0, void 0, void 0, function* () {
         const newUser = {
@@ -70,5 +75,9 @@ describe("Auth endpoint", () => {
         const user = { email: 'test@gmail.com', password: 'secretpassword' };
         const response = yield (0, supertest_1.default)(server_1.default).post('/auth/login').send(user);
         expect(response.statusCode).toBe(200);
+        expect(response.body.data.accessToken).toBeDefined();
+        expect(response.body.data.user.firstName).toBeDefined();
+        ;
+        // expect(response.body.data.user.lastName).toBe(newUser.lastName);
     }));
 });

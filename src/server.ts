@@ -66,5 +66,5 @@ const server = () => { app.listen(process.env.PORT || 5000, async () => {
 });
 }
 
-export default app 
 server()
+export default app 
