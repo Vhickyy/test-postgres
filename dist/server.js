@@ -64,40 +64,33 @@ app.use((err, req, res, next) => {
     }
     return res.status(status).json({ message });
 });
-// app.listen(process.env.PORT || 5000, async () => {
-//         try {
-//             await sequelize.authenticate(); 
-//             sequelize.sync().then(() => {
-//                 console.log('Database & tables created!');
-//             }).catch((err) => {
-//                 console.error('Unable to sync database:', err);
-//             });
-//             // sequelize.drop({cascade:true})
-//             // sequelize.sync({ force: true }).then(() => {
-//             //     console.log('Database & tables created!');
-//             // }).catch((err) => {
-//             //     console.error('Unable to sync database:', err);
-//             // });
-//         } catch (error:any) {
-//             console.log(error);
-//             process.exit(1)
-//         }
-//     });
-const server = () => {
-    app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            yield connection_1.default.authenticate();
-            connection_1.default.sync().then(() => {
-                console.log('Database & tables created!');
-            }).catch((err) => {
-                console.error('Unable to sync database:', err);
-            });
-        }
-        catch (error) {
-            // console.log(error);
-            process.exit(1);
-        }
-    }));
-};
-server();
+app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield connection_1.default.authenticate();
+        connection_1.default.sync().then(() => {
+            console.log('Database & tables created!');
+        }).catch((err) => {
+            console.error('Unable to sync database:', err);
+        });
+    }
+    catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+}));
+// const server = () => { app.listen(process.env.PORT || 5000, async () => {
+//     try {
+//         await sequelize.authenticate(); 
+//         sequelize.sync().then(() => {
+//             console.log('Database & tables created!');
+//         }).catch((err) => {
+//             console.error('Unable to sync database:', err);
+//         });
+//     } catch (error:any) {
+//         // console.log(error);
+//         process.exit(1)
+//     }
+// });
+// }
+// server()
 exports.default = app;
