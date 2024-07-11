@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "tsc --outDir dist",
     "start": "node ./dist/server.js",
-    "dev": "nodemon server.ts",
+    "dev": "nodemon ./src/server.ts",
     "postinstall": "npm list pg"
   },
   "keywords": [],
