@@ -46,7 +46,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (error) {
         console.log({ error: error.message });
-        return res.status(400).json({ status: "Bad request", message: "Registration unsuccessful", statusCode: 400 });
+        return res.status(400).json({ status: "Bad request", message: "Registration unsuccessful", error, statusCode: 400 });
     }
 });
 exports.registerUser = registerUser;

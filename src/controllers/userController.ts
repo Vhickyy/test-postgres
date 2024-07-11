@@ -23,7 +23,7 @@ export const registerUser = async (req:Request,res:Response) => {
     } catch (error:any) {
         console.log({error:error.message});
         
-        return res.status(400).json({status:"Bad request",message:"Registration unsuccessful",statusCode:400})
+        return res.status(400).json({status:"Bad request",message:"Registration unsuccessful",error,statusCode:400})
     }
 }
 
