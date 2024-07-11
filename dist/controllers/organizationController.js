@@ -31,11 +31,10 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     if (!id)
         return res.status(400).json({ status: "Bad equest", message: "id is required" });
-    req.user = "5765fhh675ghhg";
     try {
         const user = yield User_1.default.findByPk(req.user);
         if (!user)
-            return res.status(400).json({ status: "Bad Request", message: "You are not allowed to access this resource." });
+            return res.status(400).json({ status: "Bad Request", message: "Invalid User." });
         // ======== Requesting your identity ========== //
         if (id === req.user) {
             const _a = user === null || user === void 0 ? void 0 : user.toJSON(), { password } = _a, rest = __rest(_a, ["password"]);

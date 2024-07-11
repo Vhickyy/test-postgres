@@ -7,10 +7,9 @@ import { v4 } from "uuid";
 export const getUser = async (req:IRequest,res:Response) => {
     const {id} = req.params;
     if(!id) return res.status(400).json({status:"Bad equest",message:"id is required"});
-    req.user = "5765fhh675ghhg"
     try {
         const user = await User.findByPk(req.user); 
-        if(!user) return res.status(400).json({status:"Bad Request",message:"You are not allowed to access this resource."})
+        if(!user) return res.status(400).json({status:"Bad Request",message:"Invalid User."})
         // ======== Requesting your identity ========== //
         if(id === req.user) {
             const {password,...rest} = user?.toJSON()
