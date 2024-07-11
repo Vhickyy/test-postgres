@@ -24,9 +24,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
+const pg = __importStar(require("pg"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-const sequelize = new sequelize_1.Sequelize(process.env.URI, {
-    dialect: 'postgres'
+// process.env.URI!
+const sequelize = new sequelize_1.Sequelize(process.env.URI, process.env.USERNAME, process.env.POSTGRESDB, {
+    dialect: 'postgres',
+    dialectModule: pg,
+    port: Number(process.env.DB_PORT),
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
 });
 exports.default = sequelize;
