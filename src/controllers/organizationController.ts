@@ -37,6 +37,7 @@ export const getUser = async (req:IRequest,res:Response) => {
 
 export const getUserOrganizations = async (req:IRequest,res:Response) => {
     try {
+        req.user = "aad3bddd-3bf8-46a3-9b96-51d4d4e4b7cb"
         const user = await User.findByPk(req.user);
         const organisations = await user?.getOrganizations();
         return res.status(200).json({status:"success",message:"Orgsnisations sent successful",data:{organisations}})
