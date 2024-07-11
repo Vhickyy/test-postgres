@@ -106,7 +106,7 @@ const server = () => {
         }
     }));
 };
-// server()
+server();
 // "builds": [
 //         {
 //             "src": "package.json",
